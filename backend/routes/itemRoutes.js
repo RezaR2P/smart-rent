@@ -6,11 +6,13 @@ const {
   createItem,
   updateItem,
   deleteItem,
-} = require('../controllers/itemControllers');
+} = require('../controllers/itemController');
 const { verifyAdmin } = require('../middlewares/auth');
 
 router.get('/', getAllItems);
 router.get('/:id', getItemById);
-router.post('/', createItem, verifyAdmin);
-router.put('/:id', updateItem, verifyAdmin);
-router.delete('/:id', deleteItem, verifyAdmin);
+router.post('/', verifyAdmin, createItem);
+router.put('/:id', verifyAdmin, updateItem);
+router.delete('/:id', verifyAdmin, deleteItem);
+
+module.exports = router;

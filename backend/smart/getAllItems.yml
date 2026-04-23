@@ -1,17 +1,16 @@
 info:
-  name: login
+  name: getAllItems
   type: http
   seq: 1
 
 http:
-  method: POST
-  url: http://localhost:5000/api/auth/login
+  method: GET
+  url: http://localhost:5000/api/items
   body:
     type: json
     data: |-
       {
-        "email": "admin123@gmail.com",
-        "password": "123"
+
       }
   auth: inherit
 
