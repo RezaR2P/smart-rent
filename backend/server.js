@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-// CRUD items (admin & user)
+// import dan gunakan route crud items (admin & user)
 const itemRoutes = require('./routes/itemRoutes');
 app.use('/api/items', itemRoutes);
 

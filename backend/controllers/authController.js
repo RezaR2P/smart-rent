@@ -3,28 +3,30 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: 'Semua field Wajib diisi!' });
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Semua field wajib diisi' });
   }
+
   try {
-    // Cek apakah email sudah terdaftar
-    const [existingUser] = await db.query(
-      'SELECT * FROM users WHERE email = ?',
-      [email]
-    );
-    if (existingUser.length > 0) {
-      return res.status(409).json({ message: 'Email sudah terdaftar!' });
+    // Cek email sudah terdaftar
+    const [existing] = await db.query('SELECT id FROM users WHERE email = ?', [
+      email,
+    ]);
+    if (existing.length > 0) {
+      return res.status(409).json({ message: 'Email sudah terdaftar' });
     }
 
-    // Hash password sebelum disimpan
+    // Hash password
     const hashed = await bcrypt.hash(password, 10);
 
     // Simpan user baru
     const [result] = await db.query(
-      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-      [username, email, hashed]
+      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+      [name, email, hashed]
     );
+
     res
       .status(201)
       .json({ message: 'Registrasi berhasil', userId: result.insertId });
@@ -69,7 +71,7 @@ const login = async (req, res) => {
       token,
       user: {
         id: user.id,
-        username: user.username,
+        name: user.name,
         email: user.email,
         role: user.role,
       },
