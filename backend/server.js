@@ -16,6 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+// CRUD items (admin & user)
+const itemRoutes = require('./routes/itemRoutes');
+app.use('/api/items', itemRoutes);
+
 // Route dasar untuk test
 app.get('/', (req, res) => {
   res.json({ message: 'Smart-Rent API berjalan! 🚀' });
