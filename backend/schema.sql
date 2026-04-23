@@ -2,7 +2,7 @@
 
 
 -- Ganti password hash ini dengan hasil bcrypt, atau kita buat via register dulu
-UPDATE users SET role = 'admin' WHERE email = 'dian@gmail.com';
+UPDATE users SET role = 'admin' WHERE email = 'admin123@gmail.com';
 
 CREATE DATABASE smartrent_db;
 use smartrent_db;
