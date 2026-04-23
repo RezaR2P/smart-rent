@@ -1,0 +1,55 @@
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files (keep examples)
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Build outputs
+build/
+dist/
+coverage/
+**/build/
+**/dist/
+**/coverage/
+
+# Vite cache
+.vite/
+
+# Runtime/temp files
+*.pid
+*.seed
+*.pid.lock
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional local secrets folder
+backend/smart/environments/
