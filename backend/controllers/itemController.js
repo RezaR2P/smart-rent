@@ -3,12 +3,9 @@ const db = require('../config/database');
 // GET semua barang (public)
 const getAllItems = async (req, res) => {
   try {
-    const [rows] = await db.query(`
-      SELECT i.*, c.name AS category_name 
-      FROM items i
-      LEFT JOIN categories c ON i.category_id = c.id
-      ORDER BY i.created_at DESC
-    `);
+    const [rows] = await db.query(
+      'SELECT * FROM view_katalog_barang ORDER BY created_at DESC'
+    );
     res.json(rows);
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -20,12 +17,7 @@ const getItemById = async (req, res) => {
   const { id } = req.params;
   try {
     const [rows] = await db.query(
-      `
-      SELECT i.*, c.name AS category_name 
-      FROM items i
-      LEFT JOIN categories c ON i.category_id = c.id
-      WHERE i.id = ?
-    `,
+      'SELECT * FROM view_katalog_barang WHERE id = ?',
       [id]
     );
 
