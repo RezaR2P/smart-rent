@@ -11,10 +11,9 @@ const register = async (req, res) => {
 
   try {
     // Cek email sudah terdaftar
-    const [existing] = await db.query(
-      'SELECT id FROM view_user_profiles WHERE email = ?',
-      [email]
-    );
+    const [existing] = await db.query('SELECT id FROM users WHERE email = ?', [
+      email,
+    ]);
     if (existing.length > 0) {
       return res.status(409).json({ message: 'Email sudah terdaftar' });
     }
@@ -24,7 +23,7 @@ const register = async (req, res) => {
 
     // Simpan user baru
     const [result] = await db.query(
-      'INSERT INTO view_user_profiles (name, email, password) VALUES (?, ?, ?)',
+      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
       [name, email, hashed]
     );
 
@@ -45,10 +44,9 @@ const login = async (req, res) => {
 
   try {
     // Cari user
-    const [rows] = await db.query(
-      'SELECT * FROM view_user_profiles WHERE email = ?',
-      [email]
-    );
+    const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [
+      email,
+    ]);
     if (rows.length === 0) {
       return res.status(401).json({ message: 'Email atau password salah' });
     }
