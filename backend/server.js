@@ -20,6 +20,10 @@ app.use('/api/auth', authRoutes);
 const itemRoutes = require('./routes/itemRoutes');
 app.use('/api/items', itemRoutes);
 
+// import dan gunakan route crud rentals (admin & user)
+const rentalRoutes = require('./routes/rentalRoutes');
+app.use('/api/rentals', rentalRoutes);
+
 // Route dasar untuk test
 app.get('/', (req, res) => {
   res.json({ message: 'Smart-Rent API berjalan! 🚀' });
