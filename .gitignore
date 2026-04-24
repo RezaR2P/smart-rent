@@ -56,3 +56,4 @@ backend/smart/environments/
 
 # Backend API test collections (local only)
 backend/smart/*.yml
+catatan.txt

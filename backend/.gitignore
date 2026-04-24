@@ -11,5 +11,4 @@ node_modules/
 logs/
 
 # API test files (Smart HTTP client collections)
-smart/*.yml
-smart/environments/
+smart
