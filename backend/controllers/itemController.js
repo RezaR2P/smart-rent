@@ -1,4 +1,4 @@
-const db = require('../config/database');
+import db from '../config/database.js';
 
 // GET semua barang (public)
 const getAllItems = async (req, res) => {
@@ -113,10 +113,4 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAllItems,
-  getItemById,
-  createItem,
-  updateItem,
-  deleteItem,
-};
+export { getAllItems, getItemById, createItem, updateItem, deleteItem };

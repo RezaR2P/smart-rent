@@ -1,4 +1,4 @@
-const db = require('../config/database');
+import db from '../config/database.js';
 
 // POST buat rental baru (user login)
 const createRental = async (req, res) => {
@@ -15,7 +15,7 @@ const createRental = async (req, res) => {
     const [items] = await db.query('SELECT * FROM items WHERE id = ?', [
       item_id,
     ]);
-    if (!items.length === 0) {
+    if (items.length === 0) {
       return res.status(404).json({ message: 'Barang tidak ditemukan!' });
     }
     const item = items[0];
@@ -130,13 +130,8 @@ const updateRentalStatus = async (req, res) => {
     await db.query('UPDATE rentals SET status = ? WHERE id = ?', [status, id]);
     res.json({ message: `Status rental diupdate menjadi ${status}` });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
-module.exports = {
-  createRental,
-  getMyRentals,
-  getAllRentals,
-  updateRentalStatus,
-};
+export { createRental, getMyRentals, getAllRentals, updateRentalStatus };

@@ -1,8 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
 
-const db = require('./config/database');
+import db from './config/database.js';
+import authRoutes from './routes/authRoutes.js';
+import itemRoutes from './routes/itemRoutes.js';
+import rentalRoutes from './routes/rentalRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,16 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Import dan gunakan route auth
-const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-// import dan gunakan route crud items (admin & user)
-const itemRoutes = require('./routes/itemRoutes');
 app.use('/api/items', itemRoutes);
 
-// import dan gunakan route crud rentals (admin & user)
-const rentalRoutes = require('./routes/rentalRoutes');
 app.use('/api/rentals', rentalRoutes);
 
 // Route dasar untuk test
