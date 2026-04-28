@@ -1,4 +1,15 @@
+import fs from 'fs/promises';
 import db from '../config/database.js';
+
+const removeUploadedFile = async (file) => {
+  if (!file?.path) return;
+
+  try {
+    await fs.unlink(file.path);
+  } catch {
+    // Ignore cleanup errors so the original API response is preserved.
+  }
+};
 
 // POST upload bukti bayar (user login)
 const uploadPayment = async (req, res) => {
@@ -20,11 +31,13 @@ const uploadPayment = async (req, res) => {
       [rental_id, user_id]
     );
     if (rentals.length === 0) {
+      await removeUploadedFile(req.file);
       return res.status(404).json({ message: 'Rental tidak ditemukan' });
     }
 
     const rental = rentals[0];
     if (rental.status === 'cancelled') {
+      await removeUploadedFile(req.file);
       return res.status(400).json({ message: 'Rental sudah dibatalkan' });
     }
 
@@ -34,6 +47,7 @@ const uploadPayment = async (req, res) => {
       [rental_id]
     );
     if (existing.length > 0) {
+      await removeUploadedFile(req.file);
       return res
         .status(409)
         .json({ message: 'Bukti bayar sudah pernah diupload' });
@@ -52,6 +66,7 @@ const uploadPayment = async (req, res) => {
       proof_image,
     });
   } catch (err) {
+    await removeUploadedFile(req.file);
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
