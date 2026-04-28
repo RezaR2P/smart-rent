@@ -1,50 +1,78 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Navbar from '../../components/Navbar';
+import ItemCard from '../../components/ItemCard';
+import api from '../../api/axios';
 
-export default function ItemCard({ item }) {
-  const navigate = useNavigate();
+export default function ItemList() {
+  const [items, setItems] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .get('/items')
+      .then((res) => {
+        setItems(res.data);
+        setFiltered(res.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const q = search.toLowerCase();
+    setFiltered(
+      items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(q) ||
+          item.category_name?.toLowerCase().includes(q)
+      )
+    );
+  }, [search, items]);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden">
-      <img
-        src={
-          item.image_url?.startsWith('http')
-            ? item.image_url
-            : `http://localhost:5000/uploads/${item.image_url}`
-        }
-        alt={item.name}
-        className="w-full h-48 object-cover bg-gray-100"
-        onError={(e) => {
-          e.target.src = 'https://placehold.co/400x200?text=No+Image';
-        }}
-      />
-      <div className="p-4">
-        <span className="text-xs text-blue-500 font-medium bg-blue-50 px-2 py-0.5 rounded-full">
-          {item.category_name || 'Umum'}
-        </span>
-        <h3 className="font-semibold text-gray-800 mt-2 mb-1">{item.name}</h3>
-        <p className="text-sm text-gray-500 line-clamp-2 mb-3">
-          {item.description}
-        </p>
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-blue-600 font-bold">
-              Rp {Number(item.price_per_day).toLocaleString('id-ID')}
-            </span>
-            <span className="text-gray-400 text-xs"> / hari</span>
-          </div>
-          <span
-            className={`text-xs px-2 py-0.5 rounded-full ${item.stock > 0 ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-400'}`}
-          >
-            {item.stock > 0 ? `Stok: ${item.stock}` : 'Habis'}
-          </span>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Daftar Barang Sewa
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Temukan alat yang kamu butuhkan
+          </p>
         </div>
-        <button
-          onClick={() => navigate(`/items/${item.id}`)}
-          disabled={item.stock === 0}
-          className="mt-3 w-full bg-blue-500 text-white py-2 rounded-lg text-sm hover:bg-blue-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {item.stock > 0 ? 'Lihat Detail' : 'Stok Habis'}
-        </button>
+
+        {/* Search */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Cari barang atau kategori..."
+            className="w-full max-w-md border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        {/* Grid */}
+        {loading ? (
+          <div className="text-center py-20 text-gray-400">
+            Memuat barang...
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20 text-gray-400">
+            Barang tidak ditemukan
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {filtered.map((item) => (
+              <ItemCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
