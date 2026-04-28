@@ -5,6 +5,7 @@ import db from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
 import itemRoutes from './routes/itemRoutes.js';
 import rentalRoutes from './routes/rentalRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
 
 app.use('/api/rentals', rentalRoutes);
+
+app.use('/api/payments', paymentRoutes);
+
+// Serve folder uploads sebagai file statis
+app.use('/uploads', express.static('uploads'));
 
 // Route dasar untuk test
 app.get('/', (req, res) => {
