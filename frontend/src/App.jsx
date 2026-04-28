@@ -14,8 +14,8 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
       {/* Halaman lain akan ditambahkan di sini */}
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
