@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ItemList from './pages/user/ItemList';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -15,6 +16,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Halaman lain akan ditambahkan di sini */}
+      <Route path="/" element={<ItemList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="*" element={<Navigate to="/login" />} />
