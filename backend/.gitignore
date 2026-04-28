@@ -12,3 +12,4 @@ logs/
 
 # API test files (Smart HTTP client collections)
 smart
+smart/assets
