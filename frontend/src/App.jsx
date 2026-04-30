@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ItemList from './pages/user/ItemList';
+import ItemDetail from './pages/user/ItemDetail';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -19,6 +20,7 @@ function AppRoutes() {
       <Route path="/" element={<ItemList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/items/:id" element={<ItemDetail />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
