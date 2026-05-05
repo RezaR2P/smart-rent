@@ -112,7 +112,7 @@ const MyRentals = () => {
                           : `http://localhost:5000/uploads/${rental.image_url}`
                       }
                       alt={rental.item_name}
-                      className="w-20 h-20 object-cover rounded-lg bg-gray-100 flex-shrink-0"
+                      className="w-20 h-20 object-cover rounded-lg bg-gray-100 shrink-0"
                       onError={(e) => {
                         e.target.src =
                           'https://placehold.co/80x80?text=No+Image';

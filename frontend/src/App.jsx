@@ -6,6 +6,7 @@ import ItemList from './pages/user/ItemList';
 import ItemDetail from './pages/user/ItemDetail';
 import MyRentals from './pages/user/myRentals';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import ItemManage from './pages/admin/ItemManage';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -36,6 +37,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute adminOnly={true}>
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/items"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            <ItemManage />
           </ProtectedRoute>
         }
       />
