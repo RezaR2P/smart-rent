@@ -7,6 +7,7 @@ import itemRoutes from './routes/itemRoutes.js';
 import rentalRoutes from './routes/rentalRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import dashboardRoute from './routes/dashboardRoute.js';
+import categoryRoutes from './routes/categoryRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ app.use('/api/payments', paymentRoutes);
 
 app.use('/api/dashboard', dashboardRoute);
 
+app.use('/api/categories', categoryRoutes);
 // Serve folder uploads sebagai file statis
 app.use('/uploads', express.static('uploads'));
 
