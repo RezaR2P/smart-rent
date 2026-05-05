@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ItemList from './pages/user/ItemList';
 import ItemDetail from './pages/user/ItemDetail';
+import MyRentals from './pages/user/myRentals';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -21,6 +22,14 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/items/:id" element={<ItemDetail />} />
+      <Route
+        path="/my-rentals"
+        element={
+          <ProtectedRoute>
+            <MyRentals />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
