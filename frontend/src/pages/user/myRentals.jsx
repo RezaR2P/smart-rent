@@ -1,8 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import api from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import api from '../../api/axios';
 
 const statusConfig = {
   pending: {
@@ -10,8 +9,8 @@ const statusConfig = {
     color: 'bg-yellow-50 text-yellow-600',
   },
   active: { label: 'Aktif', color: 'bg-green-50 text-green-600' },
-  confirmed: { label: 'Selesai', color: 'bg-gray-50 text-gray-600' },
-  rejected: { label: 'Dibatalkan', color: 'bg-red-50 text-red-400' },
+  completed: { label: 'Selesai', color: 'bg-gray-100 text-gray-500' },
+  cancelled: { label: 'Dibatalkan', color: 'bg-red-50 text-red-400' },
 };
 
 const MyRentals = () => {
@@ -25,13 +24,13 @@ const MyRentals = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState('');
 
-  function fetchRentals() {
+  const fetchRentals = () => {
     api
       .get('/rentals/my')
       .then((res) => setRentals(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }
+  };
 
   useEffect(() => {
     fetchRentals();
@@ -44,7 +43,7 @@ const MyRentals = () => {
 
     const formData = new FormData();
     formData.append('rental_id', selectedRental.id);
-    formData.append('payment_proof', file);
+    formData.append('proof_image', file);
 
     try {
       await api.post('/payments', formData, {
@@ -75,6 +74,7 @@ const MyRentals = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
+
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Sewa Saya</h1>
@@ -82,13 +82,12 @@ const MyRentals = () => {
             Riwayat dan Status Sewaan Anda
           </p>
         </div>
+
         {rentals.length === 0 ? (
-          <div className="text-center py-20 text-gray-500">
+          <div className="text-center py-20 text-gray-400">
             <p className="mb-4">Belum ada riwayat sewa</p>
             <button
-              onClick={() => {
-                navigate('/');
-              }}
+              onClick={() => navigate('/')}
               className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition"
             >
               Mulai Sewa
@@ -113,7 +112,7 @@ const MyRentals = () => {
                           : `http://localhost:5000/uploads/${rental.image_url}`
                       }
                       alt={rental.item_name}
-                      className="w-20 h-20 object-cover rounded-lg bg-gray-100 shrink-0"
+                      className="w-20 h-20 object-cover rounded-lg bg-gray-100 flex-shrink-0"
                       onError={(e) => {
                         e.target.src =
                           'https://placehold.co/80x80?text=No+Image';
@@ -147,7 +146,7 @@ const MyRentals = () => {
                         </p>
                       </div>
 
-                      {/* Tombol upload - hanya kalau status pending */}
+                      {/* Tombol upload — hanya kalau status pending */}
                       {rental.status === 'pending' && (
                         <button
                           onClick={() => {
@@ -171,9 +170,9 @@ const MyRentals = () => {
 
       {/* Modal Upload */}
       {selectedRental && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center x-50 px-4">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-            <h2 className="text-lg text-gray-800 mb-1 font-bold">
+            <h2 className="text-lg font-bold text-gray-800 mb-1">
               Upload Bukti Bayar
             </h2>
             <p className="text-sm text-gray-500 mb-4">
@@ -181,26 +180,20 @@ const MyRentals = () => {
               {Number(selectedRental.total_price).toLocaleString('id-ID')}
             </p>
 
-            {/* Preview Gambar */}
-            {file ? (
+            {/* Preview gambar */}
+            {file && (
               <img
                 src={URL.createObjectURL(file)}
-                alt="Preview"
+                alt="preview"
                 className="w-full h-48 object-cover rounded-lg mb-4 bg-gray-100"
               />
-            ) : (
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 mb-4">
-                <p className="text-sm text-gray-500 text-center">
-                  No file selected
-                </p>
-              </div>
             )}
 
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files[0])}
               className="w-full text-sm text-gray-500 border rounded-lg px-3 py-2 mb-4"
+              onChange={(e) => setFile(e.target.files[0])}
             />
 
             {uploadMsg && (
@@ -232,4 +225,5 @@ const MyRentals = () => {
     </div>
   );
 };
+
 export default MyRentals;
