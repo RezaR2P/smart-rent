@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import ItemList from './pages/user/ItemList';
 import ItemDetail from './pages/user/ItemDetail';
 import MyRentals from './pages/user/myRentals';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -27,6 +28,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <MyRentals />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />
