@@ -1,6 +1,9 @@
 -- Ganti ROLE pengguna dengan 'admin' dengan kondisi untuk email '
 UPDATE users SET role = 'admin' WHERE email = 'admin123@gmail.com';
 
+ALTER TABLE rentals ADD COLUMN late_fee DECIMAL(10,2) DEFAULT 0 AFTER total_price;
+ALTER TABLE rentals ADD COLUMN returned_at TIMESTAMP NULL AFTER late_fee;
+
 CREATE DATABASE smartrent_db;
 use smartrent_db;
 CREATE TABLE users (
