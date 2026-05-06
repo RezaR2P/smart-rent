@@ -33,7 +33,7 @@ export default function Login() {
         {/* Logo */}
         <div className="pointer-events-none absolute inset-0 bg-black/50"></div>
         {/* Tagline */}
-        <div className="max-w-md space-y-5 relative z-10 p-6  bg-white/5 rounded-lg">
+        <div className="max-w-md space-y-5 relative z-10 p-6  bg-white/2 rounded-lg">
           <h1 className="text-white text-4xl font-bold leading-tight mb-3 ">
             Sewa Alat,
             <br />
