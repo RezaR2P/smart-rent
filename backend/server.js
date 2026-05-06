@@ -13,6 +13,14 @@ import returnRoutes from './routes/returnRoutes.js';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS dulu sebelum static files
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -32,13 +40,16 @@ app.use('/api/categories', categoryRoutes);
 
 app.use('/api/rentals', returnRoutes);
 
-// Serve folder uploads sebagai file statis
-app.use('/uploads', express.static('uploads'));
-
-// Route dasar untuk test
-app.get('/', (req, res) => {
-  res.json({ message: 'Smart-Rent API berjalan! 🚀' });
-});
+// Static files dengan header CORS eksplisit
+app.use(
+  '/uploads',
+  (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    next();
+  },
+  express.static('uploads')
+);
 
 // Tes koneksi database & jalankan server
 db.getConnection()
