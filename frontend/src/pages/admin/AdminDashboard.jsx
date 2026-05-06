@@ -93,6 +93,12 @@ const AdminDashboard = () => {
             >
               Kelola Barang
             </button>
+            <button
+              onClick={() => navigate('/admin/rentals')}
+              className="text-sm border border-gray-200 bg-white text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
+            >
+              Kelola Rental
+            </button>
           </div>
         </div>
 

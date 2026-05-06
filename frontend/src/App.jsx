@@ -7,6 +7,8 @@ import ItemDetail from './pages/user/ItemDetail';
 import MyRentals from './pages/user/myRentals';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ItemManage from './pages/admin/ItemManage';
+import PaymentVerify from './pages/admin/PaymentVerify';
+import RentalManage from './pages/admin/RentalManage';
 
 // Protected route helper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -45,6 +47,22 @@ function AppRoutes() {
         element={
           <ProtectedRoute adminOnly={true}>
             <ItemManage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/payments"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            <PaymentVerify />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/rentals"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            <RentalManage />
           </ProtectedRoute>
         }
       />
