@@ -1,33 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Navbar from '../../components/Navbar';
 import ItemCard from '../../components/ItemCard';
 import api from '../../api/axios';
 
 export default function ItemList() {
   const [items, setItems] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api
       .get('/items')
-      .then((res) => {
-        setItems(res.data);
-        setFiltered(res.data);
-      })
+      .then((res) => setItems(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
+  // Ganti useEffect + setFiltered dengan useMemo
+  const filtered = useMemo(() => {
     const q = search.toLowerCase();
-    setFiltered(
-      items.filter(
-        (item) =>
-          item.name.toLowerCase().includes(q) ||
-          item.category_name?.toLowerCase().includes(q)
-      )
+    return items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(q) ||
+        item.category_name?.toLowerCase().includes(q)
     );
   }, [search, items]);
 

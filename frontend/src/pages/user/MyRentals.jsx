@@ -145,20 +145,45 @@ const MyRentals = () => {
                           </span>
                         </p>
                       </div>
-
+                      {/* Info status pembayaran */}
+                      {rental.status === 'pending' &&
+                        rental.payment_status === 'pending' && (
+                          <p className="mt-2 text-xs text-yellow-600 bg-yellow-50 px-3 py-1.5 rounded-lg">
+                            ⏳ Bukti bayar sedang menunggu verifikasi admin
+                          </p>
+                        )}
                       {/* Tombol upload — hanya kalau status pending */}
-                      {rental.status === 'pending' && (
-                        <button
-                          onClick={() => {
-                            setSelectedRental(rental);
-                            setFile(null);
-                            setUploadMsg('');
-                          }}
-                          className="mt-3 text-sm bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition"
-                        >
-                          Upload Bukti Bayar
-                        </button>
-                      )}
+                      {rental.status === 'pending' &&
+                        rental.payment_status === 'rejected' && (
+                          <div className="mt-2">
+                            <p className="text-xs text-red-500 bg-red-50 px-3 py-1.5 rounded-lg mb-2">
+                              ❌ Bukti bayar ditolak, silakan upload ulang
+                            </p>
+                            <button
+                              onClick={() => {
+                                setSelectedRental(rental);
+                                setFile(null);
+                                setUploadMsg('');
+                              }}
+                              className="text-sm bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition"
+                            >
+                              Upload Ulang
+                            </button>
+                          </div>
+                        )}
+                      {rental.status === 'pending' &&
+                        !rental.payment_status && (
+                          <button
+                            onClick={() => {
+                              setSelectedRental(rental);
+                              setFile(null);
+                              setUploadMsg('');
+                            }}
+                            className="mt-3 text-sm bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition"
+                          >
+                            Upload Bukti Bayar
+                          </button>
+                        )}
                     </div>
                   </div>
                 </div>

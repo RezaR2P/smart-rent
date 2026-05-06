@@ -72,7 +72,15 @@ const getMyRentals = async (req, res) => {
   const user_id = req.user.id;
   try {
     const [rows] = await db.query(
-      'SELECT * FROM view_user_rentals WHERE user_id = ? ORDER BY created_at DESC',
+      `
+      SELECT r.*, i.name AS item_name, i.image_url,
+             p.status AS payment_status, p.proof_image
+      FROM rentals r
+      JOIN items i ON r.item_id = i.id
+      LEFT JOIN payments p ON p.rental_id = r.id
+      WHERE r.user_id = ?
+      ORDER BY r.created_at DESC
+    `,
       [user_id]
     );
     res.json(rows);

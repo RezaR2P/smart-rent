@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ItemList from './pages/user/ItemList';
 import ItemDetail from './pages/user/ItemDetail';
-import MyRentals from './pages/user/myRentals';
+import MyRentals from './pages/user/MyRentals';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ItemManage from './pages/admin/ItemManage';
 import PaymentVerify from './pages/admin/PaymentVerify';
