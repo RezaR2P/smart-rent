@@ -1,6 +1,17 @@
 -- Ganti ROLE pengguna dengan 'admin' dengan kondisi untuk email '
 UPDATE users SET role = 'admin' WHERE email = 'admin123@gmail.com';
 
+-- Cek kategori duplikat
+SELECT name, COUNT(*) as total FROM categories GROUP BY name HAVING total > 1;
+
+SELECT * FROM categories;
+
+DELETE FROM categories WHERE id NOT IN (
+  SELECT id FROM (
+    SELECT MIN(id) as id FROM categories GROUP BY name
+  ) AS temp
+);
+
 ALTER TABLE rentals ADD COLUMN late_fee DECIMAL(10,2) DEFAULT 0 AFTER total_price;
 ALTER TABLE rentals ADD COLUMN returned_at TIMESTAMP NULL AFTER late_fee;
 

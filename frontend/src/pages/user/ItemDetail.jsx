@@ -12,8 +12,9 @@ export default function ItemDetail() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ start_date: '', end_date: '' });
-  const [simulation, setSimulation] = useState(null);
-  const [error, setError] = useState('');
+
+  // State untuk API saja
+  const [apiError, setApiError] = useState('');
   const [bookingLoading, setBookingLoading] = useState(false);
   const [success, setSuccess] = useState('');
 
@@ -23,30 +24,34 @@ export default function ItemDetail() {
       .then((res) => setItem(res.data))
       .catch(() => navigate('/'))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, navigate]);
 
-  useEffect(() => {
-    if (form.start_date && form.end_date && item) {
-      const start = new Date(form.start_date);
-      const end = new Date(form.end_date);
-      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-      if (days > 0) {
-        setSimulation({ days, total: days * item.price_per_day });
-        setError('');
-      } else {
-        setSimulation(null);
-        setError('Tanggal akhir harus setelah tanggal mulai');
-      }
+  let simulation = null;
+  let dateError = '';
+
+  if (form.start_date && form.end_date && item) {
+    const start = new Date(form.start_date);
+    const end = new Date(form.end_date);
+    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+    if (days > 0) {
+      simulation = { days, total: days * item.price_per_day };
     } else {
-      setSimulation(null);
+      dateError = 'Tanggal akhir harus setelah tanggal mulai';
     }
-  }, [form.start_date, form.end_date, item]);
+  }
 
+  // Gabungkan error dari form (dateError) atau dari API (apiError) untuk ditampilkan
+  const displayError = dateError || apiError;
+
+  // 3. Handle Booking
   const handleBooking = async () => {
     if (!user) return navigate('/login');
-    if (!simulation) return;
+    if (!simulation || dateError) return; // Cegah booking jika ada error
+
     setBookingLoading(true);
-    setError('');
+    setApiError(''); // Reset API error
+
     try {
       const res = await api.post('/rentals', {
         item_id: id,
@@ -58,7 +63,7 @@ export default function ItemDetail() {
       );
       setTimeout(() => navigate('/my-rentals'), 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Booking gagal');
+      setApiError(err.response?.data?.message || 'Booking gagal');
     } finally {
       setBookingLoading(false);
     }
@@ -221,9 +226,9 @@ export default function ItemDetail() {
                 )}
 
                 {/* Error / Success */}
-                {error && (
+                {displayError && (
                   <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-4 text-red-400 text-sm">
-                    {error}
+                    {displayError}
                   </div>
                 )}
                 {success && (
