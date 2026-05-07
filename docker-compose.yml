@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smartrent-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env.production
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '5000:5000'
+    volumes:
+      - uploads_data:/app/uploads
+    networks:
+      - smartrent-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smartrent-frontend
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    networks:
+      - smartrent-network
+
+networks:
+  smartrent-network:
+    driver: bridge
+
+volumes:
+  uploads_data:
