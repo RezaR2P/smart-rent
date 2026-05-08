@@ -161,7 +161,7 @@ const PaymentVerify = () => {
                       }}
                     >
                       <img
-                        src={`http://localhost:5000/uploads/${payment.proof_image}`}
+                        src={`/uploads/${payment.proof_image}`}
                         alt="Bukti"
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -288,7 +288,7 @@ const PaymentVerify = () => {
             {/* Gambar bukti */}
             <div className="rounded-xl overflow-hidden bg-gray-800 mb-4">
               <img
-                src={`http://localhost:5000/uploads/${preview.proof_image}`}
+                src={`/uploads/${preview.proof_image}`}
                 alt="Bukti bayar"
                 className="w-full max-h-72 object-contain"
                 onError={(e) => {

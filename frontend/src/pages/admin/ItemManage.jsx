@@ -202,7 +202,7 @@ const ItemManage = () => {
                       src={
                         item.image_url?.startsWith('http')
                           ? item.image_url
-                          : `http://localhost:5000/uploads/${item.image_url}`
+                          : `/uploads/${item.image_url}`
                       }
                       alt={item.name}
                       className="w-11 h-11 object-cover rounded-xl bg-gray-800 shrink-0"

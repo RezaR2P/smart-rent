@@ -210,7 +210,7 @@ export default function MyRentals() {
                             src={
                               rental.image_url?.startsWith('http')
                                 ? rental.image_url
-                                : `http://localhost:5000/uploads/${rental.image_url}`
+                                : `/uploads/${rental.image_url}`
                             }
                             alt={rental.item_name}
                             className="w-20 h-20 object-cover rounded-xl bg-gray-800 shrink-0"

@@ -12,7 +12,7 @@ const ItemCard = ({ item }) => {
           src={
             item.image_url?.startsWith('http')
               ? item.image_url
-              : `http://localhost:5000/uploads/${item.image_url}`
+              : `/uploads/${item.image_url}`
           }
           alt={item.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
