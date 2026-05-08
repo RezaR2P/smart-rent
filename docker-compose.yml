@@ -32,6 +32,3 @@ services:
 networks:
   smartrent-network:
     driver: bridge
-
-volumes:
-  uploads_data:
