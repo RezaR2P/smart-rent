@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
+import bgRegis from '../../public/image/regis.avif';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -25,7 +26,10 @@ export default function Register() {
   return (
     <div className="min-h-screen flex bg-gray-950">
       {/* Panel Kiri */}
-      <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-center p-12 bg-gray-900 border-r border-gray-800 bg-[url('../../public/image/regis.avif')] bg-cover bg-center">
+      <div
+        className="relative hidden lg:flex lg:w-1/2 flex-col justify-center p-12 bg-gray-900 border-r border-gray-800  bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgRegis})` }}
+      >
         {/* Logo */}
         <div className="pointer-events-none absolute inset-0 bg-black/50"></div>
         {/* Tagline */}

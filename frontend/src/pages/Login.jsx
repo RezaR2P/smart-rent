@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
+import bgLogin from '../../public/image/bg-login.jpg';
 
 export default function Login() {
   const { login } = useAuth();
@@ -29,7 +30,10 @@ export default function Login() {
   return (
     <div className="min-h-screen flex bg-gray-950">
       {/* Panel Kiri */}
-      <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-center p-12 bg-gray-900 border-r border-gray-800 bg-[url('../../public/image/bg-login.jpg')] bg-cover bg-center">
+      <div
+        className="relative hidden lg:flex lg:w-1/2 flex-col justify-center p-12 bg-gray-900 border-r border-gray-800  bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgLogin})` }}
+      >
         {/* Logo */}
         <div className="pointer-events-none absolute inset-0 bg-black/50"></div>
         {/* Tagline */}

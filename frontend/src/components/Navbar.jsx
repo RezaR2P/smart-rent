@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
+import logo from '../../public/image/logo.png';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -24,11 +25,7 @@ export default function Navbar() {
             to={user?.role === 'admin' ? '/admin/dashboard' : '/'}
             className="flex items-center gap-2.5"
           >
-            <img
-              src="../../public/image/logo.png"
-              alt="Logo"
-              className="h-20 w-auto"
-            />
+            <img src={logo} alt="Logo" className="h-20 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
